@@ -24,7 +24,15 @@ class LeapMotionListener(Leap.Listener):
         print "Exited"
     
     def on_frame(self, controller):
-        pass
+        frame = controller.frame()
+
+        print "Frame ID: " + str(frame.id) \
+            + "Timestamp: " + str(frame.timestamp) \
+            + "# of Hands: " + str(len(frame.hands)) \
+            + "# of Fingers: " + str(len(frame.fingers)) \
+            + "# of Gestures: " + str(len(frame.gestures()))
+
+            
 
 def main():
     listener  = LeapMotionListener()
