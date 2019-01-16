@@ -1,0 +1,6 @@
+model_checkpoint_path: "red_numeros-4900"
+all_model_checkpoint_paths: "red_numeros-4500"
+all_model_checkpoint_paths: "red_numeros-4600"
+all_model_checkpoint_paths: "red_numeros-4700"
+all_model_checkpoint_paths: "red_numeros-4800"
+all_model_checkpoint_paths: "red_numeros-4900"

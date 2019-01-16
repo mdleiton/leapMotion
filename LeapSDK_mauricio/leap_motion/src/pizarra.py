@@ -1,14 +1,45 @@
+# -*- coding: utf-8 -*-
 import os, sys, inspect, thread, time
-import numeros as num
+
 import pyautogui
+import tensorflow as tf
+from PIL import Image
+import numpy as np
+
 
 src_dir = os.path.dirname(inspect.getfile(inspect.currentframe()))
 lib_dir = '../lib/x64' if sys.maxsize > 2**32 else '../lib/x86'
 sys.path.insert(0, os.path.abspath(os.path.join(src_dir, lib_dir)))
 
 from Tkinter import Frame, Canvas, YES, BOTH,Button,TOP,BOTTOM,LEFT,RIGHT
+import tkMessageBox 
+import numeros as num
 import Leap
 from time import sleep
+
+
+
+#IMPORTANDO EL MODELO
+#path = "modelo"
+#modelo = path + r"/" + "red_numeros"
+
+#saver = tf.train.Saver()
+
+#with tf.Session() as sess:
+    
+    
+    #Carga el modelo.
+ #   print('Cargando el modelo ...')
+ #   ckpts = tf.train.get_checkpoint_state(path)
+  #  print(ckpts)
+ #  print("Ruta del último Checkpoint ", ckpts.model_checkpoint_path)
+    
+    #Utiliza el último modelo guardado
+  #  saver.restore(sess,save_path = ckpts.model_checkpoint_path)
+
+
+
+
 
 i = 0
 size_width=700
@@ -58,20 +89,27 @@ class TouchPointListener(Leap.Listener):
         self.paintCanvas = canvas
         
     def rgb_to_hex(self, rgb):
-        return '#%02x%02x%02x' % rgb
+       # return '#%02x%02x%02x' % rgb
+	return '#%02x%02x%02x' % (0,0,0)
 
 
     def limpiar(self):
         self.paintCanvas.delete("all")
+
+    
 
 
     def capturar(self):
        screenshot=pyautogui.screenshot(region=(70,70,size_width,size_height))
        screenshot.save("screenshort.png")
        imagen="screenshort.png"
-       num.adivinar(imagen)
-	
+       
+       with tf.Session() as sess:
+            numero=num.adivinar(sess,imagen)
+       mensaje="Su numero es %d"%(numero)
+       tkMessageBox.showinfo(message=mensaje, title="Numero")
 
+    
 
     
 
@@ -84,10 +122,10 @@ class PaintBox(Frame):
         self.leap = Leap.Controller()
         self.painter = TouchPointListener()
 
-        self.botonLimpiar=Button(self,text="Limpiar",fg="blue",command=self.painter.limpiar)
+        self.botonLimpiar=Button(self,text="Limpiar",fg="white",bg="red",command=self.painter.limpiar)
         self.botonLimpiar.pack(side=TOP)
 
-        self.botonCapturar=Button(self,text="Capturar",fg="blue",command=self.painter.capturar)
+        self.botonCapturar=Button(self,text="Identificar Numero",fg="blue",bg="white",command=self.painter.capturar)
         self.botonCapturar.pack(side=RIGHT)
 
         self.leap.add_listener(self.painter)
