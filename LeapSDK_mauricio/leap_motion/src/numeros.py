@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 import tensorflow as tf
 import numpy as np
+import prueba2 as ab
 from tensorflow.examples.tutorials.mnist import input_data
 mnist=input_data.read_data_sets('MNIST_data',one_hot=True)
+#mnist = tf.keras.datasets.mnist
+#(X_train, y_train), (X_test, y_test) = mnist.load_data()
 import matplotlib.pyplot as plt 
 import time
 #print("Numero de ejemplos de entrenamiento: ",mnist.train.images.shape[0])
@@ -11,39 +14,21 @@ import time
 #print("sze de cada etiqueta: ",mnist.train.labels.shape[1])
 
 
-def muestra_digito(x):
-	plt.axis("off")
-	plt.imshow(x.reshape((28,28)),cmap=plt.cm.gray)
-	plt.show()
-	return
-def vis_imagen(i,conjunto="train"):
-	if(conjunto=="train"):
-		muestra_digito(mnist.train.images[i,])
-		label=np.argwhere(mnist.train.labels[i])[0][0]
-	elif(conjunto=="test"):
-		muestra_digito(mnist.test.images[i,])
-		label=np.argwhere(mnist.test.labels[i])[0][0]
-	else:
-		muestra_digito(mnist.validation.images[i,])
-		label=np.argwhere(mnist.validation.labels[i])[0][0]
-	print("Label "+ str(label))
-#vis_imagen(0,"train")
-#vis_imagen(132,"validation")
-#vis_imagen(32,"test")
-#vis_imagen(50000,"train")
+
 #ENTRENAMIENTO
 
 x=tf.placeholder(tf.float32,shape=[None,784])
 y=tf.placeholder(tf.float32,shape=[None,10])
 #capa 1
 W_1=tf.Variable(tf.truncated_normal(shape=[784,512],stddev=0.2))
-b_1=tf.Variable(tf.zeros([512]))
+b_1=tf.Variable(tf.zeros([512]))#vector de sesgos
 
 #capa 2
 W_2= tf.Variable(tf.truncated_normal(shape=[512,10],stddev=0.2))
 b_2=tf.Variable(tf.zeros([10]))
 
 def NN(x):
+	#x es una matriz
 	z_1=tf.matmul(x,W_1)+b_1
 	a_1=tf.nn.relu(z_1)
 
@@ -56,7 +41,7 @@ def NN(x):
 
 with tf.Session() as sess:
 	y_=NN(x)
-
+	#x es una matriz 
 	
 	cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits = y_, labels = y))
 	train_pred = tf.nn.softmax(y_)
@@ -88,8 +73,11 @@ def entrenar(sess,pasos=5000):
 	modelo=path+r"/"+"red_numeros"
 	saver=tf.train.Saver()		
 	print("Entrenamiento:")
+	
 	for i in range(pasos):
    		 batch = mnist.train.next_batch(100)
+		 #batch = mnist.train.next_batch(cant)
+		 #batch= ab.getTrain()[0][cant:cant+12],ab.getTrain()[1][cant:cant+12]
 		 _,costo,predicciones =  sess.run([opt, cross_entropy, train_pred],  feed_dict={x: batch[0], y: batch[1]})
     
    		 if (i % 500 == 0):
@@ -102,6 +90,7 @@ def entrenar(sess,pasos=5000):
  				os.mkdir(path)
 	
 			saver.save(sess,save_path=modelo,global_step=i)
+	
 
 
 with tf.Session() as sess:

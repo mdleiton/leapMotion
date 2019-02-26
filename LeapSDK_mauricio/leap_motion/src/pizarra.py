@@ -5,6 +5,7 @@ import pyautogui
 import tensorflow as tf
 from PIL import Image
 import numpy as np
+import tkSimpleDialog as sp
 
 
 src_dir = os.path.dirname(inspect.getfile(inspect.currentframe()))
@@ -16,6 +17,7 @@ import tkMessageBox
 import numeros as num
 import Leap
 from time import sleep
+import test as ts
 
 
 
@@ -42,8 +44,8 @@ from time import sleep
 
 
 i = 0
-size_width=700
-size_height=700
+size_width=760
+size_height=760
 
 class TouchPointListener(Leap.Listener):
     
@@ -100,14 +102,23 @@ class TouchPointListener(Leap.Listener):
 
 
     def capturar(self):
-       screenshot=pyautogui.screenshot(region=(70,70,size_width,size_height))
+       screenshot=pyautogui.screenshot(region=(70,100,size_width,size_height))
        screenshot.save("screenshort.png")
        imagen="screenshort.png"
        
        with tf.Session() as sess:
             numero=num.adivinar(sess,imagen)
        mensaje="Su numero es %d"%(numero)
-       tkMessageBox.showinfo(message=mensaje, title="Numero")
+       result = tkMessageBox.askyesno("Número",mensaje + "Es correcto?")
+       if not result:	
+	    numero=sp.askinteger('Ingreso número', 'Ingrese el número')
+       arrayimg=ts.convertirImagen(imagen)#imagen se convierte a un arreglo como estan en mnist
+       arraylbl=np.zeros((10,1),dtype="float32")#se hace el arreglo del label asi como estan los labels en mnist data
+       arraylbl[numero]=1
+
+	
+		
+    
 
     
 
@@ -126,7 +137,7 @@ class PaintBox(Frame):
         self.botonLimpiar.pack(side=TOP)
 
         self.botonCapturar=Button(self,text="Identificar Numero",fg="blue",bg="white",command=self.painter.capturar)
-        self.botonCapturar.pack(side=RIGHT)
+        self.botonCapturar.pack(side=TOP)
 
         self.leap.add_listener(self.painter)
         self.pack( expand = YES, fill = BOTH )
