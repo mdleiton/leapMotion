@@ -1,51 +1,13 @@
-# -*- coding: utf-8 -*-
-import os, sys, inspect, thread, time
-
-import pyautogui
-import tensorflow as tf
-from PIL import Image
-import numpy as np
-import tkSimpleDialog as sp
-
-
+import os, sys, inspect, time
 src_dir = os.path.dirname(inspect.getfile(inspect.currentframe()))
 lib_dir = '../lib/x64' if sys.maxsize > 2**32 else '../lib/x86'
 sys.path.insert(0, os.path.abspath(os.path.join(src_dir, lib_dir)))
-
-from Tkinter import Frame, Canvas, YES, BOTH,Button,TOP,BOTTOM,LEFT,RIGHT
-import tkMessageBox 
-import numeros as num
 import Leap
+from Tkinter import Frame, Canvas, YES, BOTH,Button,TOP
+
 from time import sleep
-import test as ts
-
-
-
-#IMPORTANDO EL MODELO
-#path = "modelo"
-#modelo = path + r"/" + "red_numeros"
-
-#saver = tf.train.Saver()
-
-#with tf.Session() as sess:
-    
-    
-    #Carga el modelo.
- #   print('Cargando el modelo ...')
- #   ckpts = tf.train.get_checkpoint_state(path)
-  #  print(ckpts)
- #  print("Ruta del último Checkpoint ", ckpts.model_checkpoint_path)
-    
-    #Utiliza el último modelo guardado
-  #  saver.restore(sess,save_path = ckpts.model_checkpoint_path)
-
-
-
-
 
 i = 0
-size_width=760
-size_height=760
 
 class TouchPointListener(Leap.Listener):
     
@@ -83,7 +45,6 @@ class TouchPointListener(Leap.Listener):
                     else:
                         self.draw(normalizedPosition.x * 800, 600 - normalizedPosition.y * 600, 15, 15, "white")
 
-
     def draw(self, x, y, width, height, color):
         self.paintCanvas.create_oval( x, y, x + width, y + height, fill = color, outline = "")
 
@@ -91,67 +52,32 @@ class TouchPointListener(Leap.Listener):
         self.paintCanvas = canvas
         
     def rgb_to_hex(self, rgb):
-       # return '#%02x%02x%02x' % rgb
-	return '#%02x%02x%02x' % (0,0,0)
-
+        return '#%02x%02x%02x' % rgb
 
     def limpiar(self):
         self.paintCanvas.delete("all")
-
-    
-
-
-    def capturar(self):
-       screenshot=pyautogui.screenshot(region=(70,100,size_width,size_height))
-       screenshot.save("screenshort.png")
-       imagen="screenshort.png"
-       
-       with tf.Session() as sess:
-            numero=num.adivinar(sess,imagen)
-       mensaje="Su numero es %d"%(numero)
-       result = tkMessageBox.askyesno("Número",mensaje + "Es correcto?")
-       if not result:	
-	    numero=sp.askinteger('Ingreso número', 'Ingrese el número')
-       arrayimg=ts.convertirImagen(imagen)#imagen se convierte a un arreglo como estan en mnist
-       arraylbl=np.zeros((10,1),dtype="float32")#se hace el arreglo del label asi como estan los labels en mnist data
-       arraylbl[numero]=1
-
-	
-		
-    
-
-    
-
-    
-
 
 class PaintBox(Frame):
 
     def __init__( self ):
         Frame.__init__( self )
-	self.place(x=0,y=0)
         self.leap = Leap.Controller()
         self.painter = TouchPointListener()
 
-        self.botonLimpiar=Button(self,text="Limpiar",fg="white",bg="red",command=self.painter.limpiar)
+        self.botonLimpiar=Button(self,text="Limpiar",fg="blue",command=self.painter.limpiar)
         self.botonLimpiar.pack(side=TOP)
-
-        self.botonCapturar=Button(self,text="Identificar Numero",fg="blue",bg="white",command=self.painter.capturar)
-        self.botonCapturar.pack(side=TOP)
 
         self.leap.add_listener(self.painter)
         self.pack( expand = YES, fill = BOTH )
         self.master.title( "Prueba 1" )
-        self.master.geometry( "800x800+0+0" )
-	
+        self.master.geometry( "800x600" )
       	
         self.leap.enable_gesture(Leap.Gesture.TYPE_SWIPE)
         self.leap.config.set("Gesture.Swipe.MinLength", 100.0)
         self.leap.config.set("Gesture.Swipe.MinVelocity", 750)
         self.leap.config.save()
 
-        self.paintCanvas = Canvas( self, width = "800", height = "800" ,bg="white")
-	
+        self.paintCanvas = Canvas( self, width = "800", height = "600" ,bg="white")
         self.paintCanvas.pack()
         self.painter.set_canvas(self.paintCanvas)
        
@@ -161,4 +87,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
