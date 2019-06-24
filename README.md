@@ -1,16 +1,19 @@
 leapMotion
 ==========
 
+Version 1.0 23/06/2019
+----------------------
+
 # Configuración leapMotion
 1. Abrir una terminal y ejecutar servicio del leap motion con el siguiente comando.	
 ```
 	sudo leapd
 ```
-2. Abrir otra terminal 
+2. Abrir otra terminal y ejecutar el panel de control que ofrece leap motion
 ```
 	sudo LeapControlPanel
 ```
-* ![Alt text](demos/configuracion.png "Captura configuracion")
+![Alt text](demos/configuracion.png "Captura configuracion")
 
 # Instalación dependencias para ejecutar demos
 1. Ejecutar solo una vez.
@@ -22,9 +25,6 @@ pip install -r requirements.txt
 ```
 
 # Demos desarrolladas para el leap motion
-
-Version 1.0 23/06/2019
-----------------------
 
 * Ejecutar demo pizarra
 -----------------------
@@ -46,8 +46,8 @@ Version 1.0 23/06/2019
 
 Capturas demo pizarra
 ---------------------
-* ![Alt text](demos/demo_pizarra_1.png "Captura demo 1")
-* ![Alt text](demos/demo_pizarra_2.png "Captura demo 2")
+![Alt text](demos/demo_pizarra_1.png "Captura demo 1")
+![Alt text](demos/demo_pizarra_2.png "Captura demo 2")
 ![Output sample](demos/demoPizarra.gif)
 
 
@@ -72,7 +72,7 @@ Capturas demo pizarra
 Capturas demo predicción digitos
 --------------------------------
 
-* ![Alt text](demos/demo_prediccion_1.png "Captura demo 1")
-* ![Alt text](demos/demo_prediccion_2.png "Captura demo 2")
-* ![Alt text](demos/demo_prediccion_3.png "Captura demo 3")
-* ![Alt text](demos/demo_prediccion_4.png "Captura demo 4")
+![Alt text](demos/demo_prediccion_1.png "Captura demo 1")
+![Alt text](demos/demo_prediccion_2.png "Captura demo 2")
+![Alt text](demos/demo_prediccion_3.png "Captura demo 3")
+![Alt text](demos/demo_prediccion_4.png "Captura demo 4")
