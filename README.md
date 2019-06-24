@@ -52,8 +52,10 @@ Capturas demo pizarra
 ![Output sample](demos/demoPizarra.gif)
 
 
-* Ejecutar demo predicción digitos
+* Demo predicción dígitos
 ----------------------------------
+### Autora ###
+* Karina Saylema [github](https://github.com/karissay)
 
 1. Abrir una terminal y ejecutar servicio del leap motion con el siguiente comando.	
 ```
