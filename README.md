@@ -36,6 +36,7 @@ pip install -r requirements.txt
 
 2. Abrir otra terminal 
 ```
+	source env/bin/activate
 	cd LeapSDK_mauricio/leap_motion/src/
 ```
 
