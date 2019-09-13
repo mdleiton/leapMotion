@@ -14,11 +14,13 @@ sys.path.insert(0, os.path.abspath(os.path.join(src_dir, lib_dir)))
 
 from Tkinter import Frame, Canvas, YES, BOTH,Button,TOP,BOTTOM,LEFT,RIGHT
 import tkMessageBox
-import numeros as num
+#import numeros as num
 import Leap
 from time import sleep
 import test as ts
 import matplotlib.pyplot as plt
+
+import dataset_test as dt
 
 
 
@@ -98,22 +100,24 @@ class TouchPointListener(Leap.Listener):
         img.save("screenshot1.png","png")
         os.remove("canvas_im.eps")
         global on_prediction
-        on_prediction = True
+        #on_prediction = True
         imagen="screenshot1.png"
 
         """LA PREDICCION AUN NO ESTA IMPLEMENTADA PARA EL LEAP MOTION"""
-        with tf.Session() as sess:
-            numero=num.adivinar_erick(sess,imagen)
-        mensaje="Su numero es %d "%(numero)
+        """with tf.Session() as sess:
+            numero=num.adivinar(sess,imagen)"""
+        numero = dt.adivinar_erick(imagen)
+        mensaje="Su numero es %d "%numero
         result = tkMessageBox.askyesno("Número",mensaje + "Es correcto?")
-        #if not result:
-        #     numero=sp.askinteger('Ingreso número', 'Ingrese el número')
-        arrayimg=np.array(ts.convertirImagen(imagen))#imagen se convierte a un arreglo como estan en mnist
+        if not result:
+            numero=sp.askinteger('Ingreso número', 'Ingrese el número')
+            arrayimg=np.array([ts.convertirImagen(imagen)])
+            dt.reentrenar(arrayimg,np.array([numero]))
         #plt.imshow(arrayimg,cmap=plt.cm.binary)
         #plt.show()
-        arraylbl=np.zeros((10,1),dtype="float32")#se hace el arreglo del label asi como estan los labels en mnist data
-        arraylbl[numero]=1
-        on_prediction = False
+        #arraylbl=np.zeros((10,1),dtype="float32")#se hace el arreglo del label asi como estan los labels en mnist data
+        #arraylbl[numero]=1
+        #on_prediction = False
 
 class PaintBox(Frame):
 
