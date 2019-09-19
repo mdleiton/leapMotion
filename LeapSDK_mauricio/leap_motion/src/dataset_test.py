@@ -53,9 +53,14 @@ def adivinar_erick(imagen):
     prediction = model.predict(arrayimg_norm)[0]
     return np.argmax(prediction)
 
-def reentrenar(x_train,y_train):
+def reentrenar(x_train,y_train,intento):
+    print("*****REENTRAMIENTO NUMERO: %d*****"%intento)
     model.fit(x_train,y_train,epochs=5)
     model.save('modelo_erick/modelo_test.h5')
+    if y_train[0] == adivinar_erick(imagen) or intento == 20:
+        print("NUMERO DE INTENTOS TOTALES: "+str(intento))
+    else:
+        reentrenar(x_train,y_train,intento+1)
 
 def evaluates_model(x_test, y_test):
     loss, acc = model.evaluate(x_test, y_test)

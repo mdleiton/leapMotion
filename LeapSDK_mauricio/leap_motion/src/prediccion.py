@@ -49,6 +49,8 @@ class TouchPointListener(Leap.Listener):
     def on_frame(self, controller):
         #self.paintCanvas.delete("all")
         global i, on_prediction
+        if on_prediction:
+            return
         frame = controller.frame()
         for gesture in frame.gestures():
             if gesture.type is Leap.Gesture.TYPE_SWIPE:
@@ -57,8 +59,7 @@ class TouchPointListener(Leap.Listener):
                 sleep(2)
 
         interactionBox = frame.interaction_box
-        if on_prediction:
-            return
+
         for hand in frame.hands:
             for finger in hand.fingers:
                 if finger.type == 1:
@@ -70,7 +71,7 @@ class TouchPointListener(Leap.Listener):
                             color = self.rgb_to_hex((-255 * finger.touch_distance, 0, 0))
                         else:
                             color = self.rgb_to_hex((0,0,200))"""
-                        if(finger.touch_distance <= 0.55 and finger.touch_zone != Leap.Pointable.ZONE_NONE):
+                        if(finger.touch_distance <= 0.55 and finger.touch_zone != Leap.Pointable.ZONE_NONE and finger.type != 2):
                             self.draw(normalizedPosition.x * 500, 500 - normalizedPosition.y * 500, 20, 20, "black")
                     else:
                         self.draw(normalizedPosition.x * 500, 500 - normalizedPosition.y * 500, 20, 20, "white")
@@ -100,7 +101,7 @@ class TouchPointListener(Leap.Listener):
         img.save("screenshot1.png","png")
         os.remove("canvas_im.eps")
         global on_prediction
-        #on_prediction = True
+        on_prediction = True
         imagen="screenshot1.png"
 
         """LA PREDICCION AUN NO ESTA IMPLEMENTADA PARA EL LEAP MOTION"""
@@ -110,9 +111,11 @@ class TouchPointListener(Leap.Listener):
         mensaje="Su numero es %d "%numero
         result = tkMessageBox.askyesno("Número",mensaje + "Es correcto?")
         if not result:
-            numero=sp.askinteger('Ingreso número', 'Ingrese el número')
-            arrayimg=np.array([ts.convertirImagen(imagen)])
-            dt.reentrenar(arrayimg,np.array([numero]))
+            numero=sp.askinteger('Confirmación de número', 'Ingrese el número')
+            if numero != None:
+                arrayimg=np.array([ts.convertirImagen(imagen)])
+                dt.reentrenar(arrayimg,np.array([numero]),1)
+        on_prediction = False
         #plt.imshow(arrayimg,cmap=plt.cm.binary)
         #plt.show()
         #arraylbl=np.zeros((10,1),dtype="float32")#se hace el arreglo del label asi como estan los labels en mnist data
