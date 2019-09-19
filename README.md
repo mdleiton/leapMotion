@@ -1,8 +1,34 @@
 leapMotion
 ==========
 
-Version 1.0 23/06/2019
+Version 2.0 19-08-2019
 ----------------------
+
+# Instalación leapMotion
+1. Descargar el sdk o buscar el archivo Leap-2.3.1+31549-x64.deb
+2. Instalar
+```
+	sudo dpkg --install Leap-*-x64.deb
+```
+3.- en caso de errores:  
+```
+    sudo nano /lib/systemd/system/leapd.service
+    leapd.service file:
+    [Unit]
+    Description=LeapMotion Daemon
+    After=syslog.target
+
+    [Service]
+    Type=simple
+    ExecStart=/usr/sbin/leapd
+
+    [Install]
+    WantedBy=multi-user.target
+
+    sudo ln -s /lib/systemd/system/leapd.service /etc/systemd/system/leapd.service
+    sudo systemctl daemon-reload
+    sudo dpkg --install Leap-2.3.1+31549-x64.deb
+```
 
 # Configuración leapMotion
 1. Abrir una terminal y ejecutar servicio del leap motion con el siguiente comando.	
@@ -52,10 +78,10 @@ Capturas demo pizarra
 ![Output sample](demos/demoPizarra.gif)
 
 
-* Demo predicción dígitos
 ----------------------------------
-### Autora ###
+### Autores ###
 * Karina Saylema [github](https://github.com/karissay)
+* Erick Pulla [github](https://github.com/epulla)
 
 1. Abrir una terminal y ejecutar servicio del leap motion con el siguiente comando.	
 ```
@@ -79,3 +105,14 @@ Capturas demo predicción digitos
 ![Alt text](demos/demo_prediccion_2.png "Captura demo 2")
 ![Alt text](demos/demo_prediccion_3.png "Captura demo 3")
 ![Alt text](demos/demo_prediccion_4.png "Captura demo 4")
+![Alt text](demos/demo_reentrenamiento1.gif "Captura demo 7")
+
+## Re-entrenamiento
+
+El modelo puede predecir incorrectamente lo que el usuario esta dibujando. Para esto, el programa le permite al usuario ingresar el número que intentó dibujar y así, *re-entrenar* el modelo para obtener una nueva predicción y mejorandolo para futuras predicciones.
+
+El programa muestra el # de intentos de entrenamiento que hizo hasta predecir el resultado deseado por el usuario.
+
+Predicción fallida (antes) | Predicción mejorada (después)
+--- | --- |
+![Alt text](demos/demo_reentrenamiento0.gif "Reentrenamiento de prediccion fallida") | ![Alt text](demos/demo_reentrenamiento0.1.gif "Prediccion mejorada")
