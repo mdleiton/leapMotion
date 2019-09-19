@@ -59,6 +59,6 @@ def reentrenar(x_train,y_train):
 
 def evaluates_model(x_test, y_test):
     loss, acc = model.evaluate(x_test, y_test)
-    print("Untrained model, accuracy: {:5.2f}%".format(100*acc))
+    print("Model, accuracy: {:5.2f}%".format(100*acc))
 
 print(np.array([ts.convertirImagen(imagen)]).shape)
