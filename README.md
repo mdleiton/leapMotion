@@ -5,10 +5,14 @@ Version 2.0 19-08-2019
 ----------------------
 
 # Instalación leapMotion
-1. Descargar el sdk o buscar el archivo Leap-2.3.1+31549-x64.deb
+1. Descargar el sdk o buscar el archivo Leap-2.3.1+31549-xYY.deb deacuerdo a su computadora.
+
+    x86![Alt text](https://drive.google.com/file/d/1k3EmZczTlVziRdgeyREYXt9qzqY6VLuB/view?usp=sharing "x86")
+    x64![Alt text](https://drive.google.com/file/d/1EbVijR5ZYLFzMTxv4rVbzTbYd6TnF6dG/view?usp=sharing "x64")
+
 2. Instalar
 ```
-	sudo dpkg --install Leap-*-x64.deb
+	sudo dpkg --install Leap-*-xYY.deb
 ```
 3.- en caso de errores:  
 ```
@@ -46,6 +50,7 @@ Version 2.0 19-08-2019
 ```
 sudo apt-get install scrot
 virtualenv --python=python2 env
+cd leapMotion/
 source env/bin/activate
 pip install -r requirements.txt
 ```
@@ -63,7 +68,7 @@ pip install -r requirements.txt
 2. Abrir otra terminal 
 ```
 	source env/bin/activate
-	cd LeapSDK_mauricio/leap_motion/src/
+	cd leapMotion/LeapSDK_mauricio/leap_motion/src/
 ```
 
 3. Ejecutar script de pizarra
@@ -91,7 +96,7 @@ Capturas demo pizarra
 1. Abrir otra terminal y ejecutar
 ```
 	source env/bin/activate
-	cd LeapSDK_mauricio/leap_motion/src/
+	cd leapMotion/LeapSDK_mauricio/leap_motion/src/
 ```
 
 2. Ejecutar script de predicción
