@@ -7,8 +7,8 @@ Version 2.0 19-08-2019
 # Instalación leapMotion
 1. Descargar el sdk o buscar el archivo Leap-2.3.1+31549-xYY.deb deacuerdo a su computadora.
 
-    x86![Alt text](https://drive.google.com/file/d/1k3EmZczTlVziRdgeyREYXt9qzqY6VLuB/view?usp=sharing "x86")
-    x64![Alt text](https://drive.google.com/file/d/1EbVijR5ZYLFzMTxv4rVbzTbYd6TnF6dG/view?usp=sharing "x64")
+    [x86](https://drive.google.com/file/d/1k3EmZczTlVziRdgeyREYXt9qzqY6VLuB/view?usp=sharing)\
+    [x64](https://drive.google.com/file/d/1EbVijR5ZYLFzMTxv4rVbzTbYd6TnF6dG/view?usp=sharing)\
 
 2. Instalar
 ```
