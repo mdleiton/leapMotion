@@ -50,8 +50,8 @@ Version 2.0 19-08-2019
 ```
 sudo apt-get install scrot
 virtualenv --python=python2 env
-cd leapMotion/
 source env/bin/activate
+cd leapMotion/
 pip install -r requirements.txt
 ```
 
